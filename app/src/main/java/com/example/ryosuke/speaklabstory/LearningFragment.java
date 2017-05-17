@@ -2,6 +2,7 @@ package com.example.ryosuke.speaklabstory;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -41,14 +43,16 @@ public class LearningFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private final String JSON_FILE = "data.json";
+    private final String JSON_FILE = "data.json"; //jsonfileにuriなどをおいた
     private MyContent mContent;
 
-    private TextView contentText;
+    private View containerView; //layoutViewを取得
 
     public LearningFragment() {
         // Required empty public constructor
     }
+
+    AssetManager assets;
 
     /**
      * Use this factory method to create a new instance of
@@ -107,6 +111,8 @@ public class LearningFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+
+        assets = context.getAssets();
     }
 
     @Override
@@ -118,7 +124,8 @@ public class LearningFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        contentText = (TextView)view.findViewById(R.id.contentText);
+        this.containerView = view;
+
     }
 
     @Override
@@ -187,12 +194,14 @@ public class LearningFragment extends Fragment {
       ここからがメインの内容となります
      */
     private void startLearning(String targetKANA){
+        ImageFactory iFactory;
         String sound;
         ArrayList<Bundle> array;
         Bundle bundle;
         String word;
         String imageUri1;
         String imageUri2;
+
 
         if(targetKANA ==null)return;
         sound = KANA.checkSoundOf(targetKANA);
@@ -208,7 +217,21 @@ public class LearningFragment extends Fragment {
         StringBuffer sb = new StringBuffer();
         sb.append(word).append("のURIは").append(imageUri1).append("です。");
 
+        iFactory = new ImageFactory(getContext(),assets);
+        ImageView imageView = iFactory.newImageView(imageUri1); //渡したuriをassetから取得、imageViewにする
+
+        TextView contentText = (TextView)containerView.findViewById(R.id.contentText);
         contentText.setText(sb.toString());
+
+        ViewGroup views = (ViewGroup)containerView.findViewById(R.id.learningFragmentView);
+        views.addView(imageView);
+
+
+
+
+
+        contentText.setText(sb.toString());
+
 
     }
 

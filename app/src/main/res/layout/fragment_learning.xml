@@ -1,13 +1,26 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="bottom"
+
+
+
     tools:context="com.example.ryosuke.speaklabstory.LearningFragment">
 
     <RelativeLayout
+        android:layout_margin="50px"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:id="@+id/learningFragmentView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+    <RelativeLayout
+        android:id="@+id/fukidashi"
+        android:layout_alignParentBottom="true"
         android:background="#a793eaea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -21,9 +34,35 @@
     
     <TextView
         android:id="@+id/contentText"
+        android:textSize="40px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/charaImage"/>
 
     </RelativeLayout>
-</LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_above="@id/fukidashi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50px"
+        >
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="戻る" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@id/button3"
+            android:text="進む" />
+
+    </RelativeLayout>
+</RelativeLayout>

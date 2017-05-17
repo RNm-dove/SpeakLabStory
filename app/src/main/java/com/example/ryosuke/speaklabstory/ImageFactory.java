@@ -31,6 +31,7 @@ public class ImageFactory {
         InputStream in = null;
         Bitmap bitmap = null;
 
+
         try{
             in = assets.open(filename);
             bitmap = BitmapFactory.decodeStream(in);

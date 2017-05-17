@@ -50,4 +50,8 @@ public class MainActivity extends AppCompatActivity implements TitleFragment.MyL
     public void onButtonClickedInMap(View v) {
         fManager.beginTransaction().replace(R.id.containerFragment,LearningFragment.newInstance("あ",""),STORY_FRAGMENT).commit();
     }
+
+    public ImageFactory getImageFactory(){
+        return new ImageFactory(getApplicationContext(),getAssets());
+    }
 }
