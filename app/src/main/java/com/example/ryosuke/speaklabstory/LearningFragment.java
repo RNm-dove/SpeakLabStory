@@ -32,7 +32,7 @@ import java.util.ArrayList;
  * Use the {@link LearningFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LearningFragment extends Fragment {
+public class LearningFragment extends Fragment implements Lesson.LessonUpdater {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -43,8 +43,6 @@ public class LearningFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private final String JSON_FILE = "data.json"; //jsonfileにuriなどをおいた
-    private MyContent mContent;
 
     private View containerView; //layoutViewを取得
 
@@ -79,11 +77,6 @@ public class LearningFragment extends Fragment {
             targetKANA = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        JSONObject json = getJsonFile();
-        mContent = new MyContent(json);
-
-
     }
 
     @Override
@@ -131,7 +124,8 @@ public class LearningFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        startLearning(targetKANA);
+        Lesson l = new Lesson(assets);
+        l.startLearning(targetKANA); // Lessonclass がこのアプリのメインになる
     }
 
     /**
@@ -149,106 +143,11 @@ public class LearningFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    private JSONObject getJsonFile(){
-        InputStream in;
-        JSONObject json;
-        String jsonString;
-        in = null;
-        json = null;
-        jsonString = null;
-        AssetManager assets = getActivity().getAssets();
 
-        try{
-            //JsonFileの読み出し
-            in = assets.open(JSON_FILE);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            StringBuilder stringBuilder = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-            reader.close();
-            jsonString = stringBuilder.toString();
-        } catch (IOException e){
-            throw new RuntimeException("Couldn't load jsonFile from asset' " + JSON_FILE + "'");
-        } finally {
-            if(in != null){
-                try {
-                    in.close();
-                }catch (IOException e){
+    //Lesson class で呼ばれる。このタイミングで描画を入れ替える。
 
-                }
-            }
-        }
-        try{
-            json = new JSONObject(jsonString); //jsonObjectにjsonSringを格納
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
+    @Override
+    public void update() {
 
-        return json;
-
-    }
-
-    /*
-      ここからがメインの内容となります
-     */
-    private void startLearning(String targetKANA){
-        ImageFactory iFactory;
-        String sound;
-        ArrayList<Bundle> array;
-        Bundle bundle;
-        String word;
-        String imageUri1;
-        String imageUri2;
-
-
-        if(targetKANA ==null)return;
-        sound = KANA.checkSoundOf(targetKANA);
-        if(sound == null){
-            throw new RuntimeException("targetKana is not kana or defined in KANA class");
-        }
-        array = getArraylistOf(sound);
-        bundle = array.get(KANA.checkPositionOf(targetKANA));
-
-        word = bundle.getString("word");
-        imageUri1 = bundle.getString("imageURI");
-
-        StringBuffer sb = new StringBuffer();
-        sb.append(word).append("のURIは").append(imageUri1).append("です。");
-
-        iFactory = new ImageFactory(getContext(),assets);
-        ImageView imageView = iFactory.newImageView(imageUri1); //渡したuriをassetから取得、imageViewにする
-
-        TextView contentText = (TextView)containerView.findViewById(R.id.contentText);
-        contentText.setText(sb.toString());
-
-        ViewGroup views = (ViewGroup)containerView.findViewById(R.id.learningFragmentView);
-        views.addView(imageView);
-
-
-
-
-
-        contentText.setText(sb.toString());
-
-
-    }
-
-    private ArrayList<Bundle> getArraylistOf(String sound){
-        ArrayList<Bundle> array = null;
-        switch (sound){
-            case "a": array = mContent.a; break;
-            case "ka": array = mContent.ka; break;
-            case "sa": array = mContent.sa; break;
-            case "ta": array = mContent.ta; break;
-            case "na": array = mContent.na; break;
-            case "ha": array = mContent.ha; break;
-            case "ma": array = mContent.ma; break;
-            case "ya": array = mContent.ya; break;
-            case "ra": array = mContent.ra; break;
-            case "wa": array = mContent.wa; break;
-        }
-        return array;
     }
 }
