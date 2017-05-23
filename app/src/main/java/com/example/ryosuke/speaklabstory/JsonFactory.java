@@ -15,6 +15,9 @@ import java.io.InputStreamReader;
  */
 
 public class JsonFactory {
+    /*
+        このクラスはjsonfileの名前を受け取り、自動的にassetフォルダから該当のjsonフォルダを取得、パースしてjsonObjectとして返します。
+     */
 
 
     public JsonFactory() {

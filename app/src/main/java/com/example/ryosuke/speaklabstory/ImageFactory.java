@@ -21,6 +21,10 @@ public class ImageFactory {
     Context context;
     AssetManager assets;
 
+    /*
+        このクラスはfile名を渡すことで、自動的にassetからImageViewを返すくメソッドを持ったうクラスです。
+     */
+
 
     public ImageFactory(Context context, AssetManager assets){
         this.context = context;

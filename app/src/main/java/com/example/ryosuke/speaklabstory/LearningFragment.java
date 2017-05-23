@@ -10,7 +10,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -43,14 +45,18 @@ public class LearningFragment extends Fragment implements Lesson.LessonUpdater {
 
     private OnFragmentInteractionListener mListener;
 
-
-    private View containerView; //layoutViewを取得
-
     public LearningFragment() {
         // Required empty public constructor
     }
 
     AssetManager assets;
+    private TextView tView;
+    private ImageView iView;
+    private String text;
+    private String uri;
+    private ImageFactory iFactory;
+    private RelativeLayout rLayout;
+    private Lesson mLesson;
 
     /**
      * Use this factory method to create a new instance of
@@ -77,6 +83,7 @@ public class LearningFragment extends Fragment implements Lesson.LessonUpdater {
             targetKANA = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mLesson = new Lesson(assets,this);
     }
 
     @Override
@@ -114,18 +121,32 @@ public class LearningFragment extends Fragment implements Lesson.LessonUpdater {
         mListener = null;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        this.containerView = view;
-
-    }
 
     @Override
     public void onStart() {
         super.onStart();
-        Lesson l = new Lesson(assets);
-        l.startLearning(targetKANA); // Lessonclass がこのアプリのメインになる
+        iFactory = new ImageFactory(getContext(),assets);
+        mLesson.startLearning(targetKANA); // Lessonclass がこのアプリのメインになる
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Button bButton = (Button)view.findViewById(R.id.backButton);
+        Button fButton = (Button)view.findViewById(R.id.forwardButton);
+        bButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                mLesson.onBackButtonClicked();
+            }
+        });
+        fButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                mLesson.onForwardButtonCliked();
+            }
+        });
     }
 
     /**
@@ -147,7 +168,18 @@ public class LearningFragment extends Fragment implements Lesson.LessonUpdater {
     //Lesson class で呼ばれる。このタイミングで描画を入れ替える。
 
     @Override
-    public void update() {
+    public void update(Screen s) {
+       text = s.getExplain();
+        uri = s.getUri();
+        View v = getView();
+        tView = (TextView)v.findViewById(R.id.contentText);
+        iView = iFactory.newImageView(uri);
+
+        rLayout = (RelativeLayout)v.findViewById(R.id.learningFragmentView);
+        rLayout.removeAllViews();
+        rLayout.addView(iView);
+        tView.setText(text);
+
 
     }
 }

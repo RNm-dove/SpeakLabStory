@@ -5,6 +5,9 @@ package com.example.ryosuke.speaklabstory;
  */
 
 public class KANA {
+    /*
+        このクラスはひらがなの子音やその行の何文字目かを返す補助クラスです。
+     */
 
     public KANA() {
     }

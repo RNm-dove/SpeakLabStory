@@ -50,18 +50,17 @@
         >
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:text="戻る" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/forwardButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_toLeftOf="@id/button3"
             android:text="進む" />
 
     </RelativeLayout>
