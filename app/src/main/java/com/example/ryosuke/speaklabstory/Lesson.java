@@ -94,7 +94,6 @@ public class Lesson {
     public void onSpeechLesson(SpeechScreen s){
 
 
-
     }
 
     public void onForwardButtonCliked(){

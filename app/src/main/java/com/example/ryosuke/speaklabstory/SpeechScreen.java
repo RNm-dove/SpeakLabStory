@@ -3,6 +3,7 @@ package com.example.ryosuke.speaklabstory;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -17,13 +18,19 @@ public class SpeechScreen extends Screen implements RecognitionListener{
     Boolean isEnable = false;
     Context context;
     Boolean isReady = false;
+    Boolean hasError = false;
     String text;
     SpeechRecognizer mSpeechRecognizer;
     Intent mIntent = null;
+    Vibrator mVibrator;
+    long[] pattern = {500,500,500,500};
+
+
 
     public SpeechScreen(int state, Context context) {
         super(state);
         this.context = context;
+        mVibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
 
     }
 
@@ -74,6 +81,8 @@ public class SpeechScreen extends Screen implements RecognitionListener{
     @Override
     public void onReadyForSpeech(Bundle params) {
         isReady = true;
+
+
     }
 
     @Override
@@ -93,6 +102,7 @@ public class SpeechScreen extends Screen implements RecognitionListener{
 
     @Override
     public void onEndOfSpeech() {
+        mVibrator.vibrate(pattern,1);
 
     }
 
@@ -139,6 +149,8 @@ public class SpeechScreen extends Screen implements RecognitionListener{
             default:
         }
 
+        hasError = true;
+
 
     }
 
@@ -146,6 +158,7 @@ public class SpeechScreen extends Screen implements RecognitionListener{
     public void onResults(Bundle results) {
         ArrayList<String> datalist = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         text = datalist.get(0);
+
 
     }
 
@@ -158,4 +171,14 @@ public class SpeechScreen extends Screen implements RecognitionListener{
     public void onEvent(int eventType, Bundle params) {
 
     }
+
+    public String getResult(){
+        return text;
+    }
+
+    public boolean hasError(){
+        return hasError;
+    }
+
+
 }
