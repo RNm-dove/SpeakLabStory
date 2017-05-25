@@ -1,6 +1,9 @@
 package com.example.ryosuke.speaklabstory;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -16,10 +19,16 @@ public class MainActivity extends AppCompatActivity implements TitleFragment.MyL
     private final String TITLE_FRAGMENT = "tFragment";
     private final String MAP_FRAGMENT = "mFragmnet";
 
+    private final int PERMISSIONS_REQUEST_CODE = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        permissionCheck();
+    }
+
+    private void getContentsInfo(){
         fManager = getSupportFragmentManager();
         Fragment fragment = new TitleFragment();
         fManager.beginTransaction().add(R.id.containerFragment,fragment,TITLE_FRAGMENT).commit();
@@ -54,4 +63,20 @@ public class MainActivity extends AppCompatActivity implements TitleFragment.MyL
     public ImageFactory getImageFactory(){
         return new ImageFactory(getApplicationContext(),getAssets());
     }
+
+    private void permissionCheck(){ //if more than android6.0 ,request permission.
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED ){
+                getContentsInfo();
+            } else {
+                requestPermissions(new String[]{Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO}, PERMISSIONS_REQUEST_CODE);
+
+                getContentsInfo();
+            }
+
+        } else{
+            getContentsInfo();
+        }
+    }
+
 }

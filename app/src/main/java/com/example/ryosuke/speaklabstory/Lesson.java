@@ -2,7 +2,9 @@ package com.example.ryosuke.speaklabstory;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.hardware.Camera;
 import android.os.Bundle;
+import android.speech.SpeechRecognizer;
 import android.support.v4.app.Fragment;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -28,13 +30,16 @@ public class Lesson {
     private String targetKANA;
     private HashMap<Integer,Screen> map;
     private Bundle soundBox;
+    private Screen mScreen;
+    private Context mContext;
 
     private Integer CURRENT_STATE = 1; //画面の番号
     private int COUNT_LIMIT =1; // 画面の枚数
 
-    public Lesson(AssetManager assets, Fragment fragment) {
+    public Lesson(AssetManager assets, Fragment fragment,Context context) {
 
         this.assets = assets;
+        this.mContext = context;
         JsonFactory jF = new JsonFactory();
         JSONObject json = jF.getJsonObject(assets,JSON_FILE);
         mContent = new MyContent(json);
@@ -54,6 +59,7 @@ public class Lesson {
         String word;
         String imageUri;
         String explain;
+        String[] explains;
 
 
         if(targetKANA ==null)return;
@@ -63,15 +69,16 @@ public class Lesson {
         }
         array = getArraylistOf(sound);      // getArrayListOf()はこのクラスのメソッド　子音に応じたarraylistを返す。
         soundBox = array.get(KANA.checkPositionOf(targetKANA)); //子音の番号に応じたBundleを取得。「せ」であればarray.get(3)
-
         explain = soundBox.getString("explain"+CURRENT_STATE);
+        explains = explain.split(",");
+
         imageUri = soundBox.getString("imageURI"+CURRENT_STATE);
         COUNT_LIMIT = Integer.valueOf(soundBox.getString("count"));
 
 
         Screen firstScreen = new Screen(CURRENT_STATE);
         firstScreen.setViewUri(imageUri);
-        firstScreen.setExplain(explain);
+        firstScreen.setExplains(explains);
         map = new HashMap<Integer,Screen>();
         map.put(CURRENT_STATE,firstScreen);
 
@@ -84,12 +91,30 @@ public class Lesson {
 
     }
 
+    public void onSpeechLesson(SpeechScreen s){
+
+    }
+
     public void onForwardButtonCliked(){
         CURRENT_STATE++;
         if(CURRENT_STATE <= COUNT_LIMIT){
-            Screen nextScreen = nextScreen(CURRENT_STATE);
+            if(map.get(CURRENT_STATE) != null){
+                mScreen = map.get(CURRENT_STATE);
+            } else {
+                mScreen = nextScreen(CURRENT_STATE);
+            }
             if(mListener != null){
-                mListener.update(nextScreen);
+                mListener.update(mScreen);
+            }
+        } else if(CURRENT_STATE == COUNT_LIMIT + 1) {
+             CameraScreen cScreen = getCameraScreen(CURRENT_STATE);
+            if(mListener != null){
+                mListener.update(cScreen);
+            }
+        } else if(CURRENT_STATE == COUNT_LIMIT + 2){
+            SpeechScreen sScreen = getSpeechScreen(CURRENT_STATE,mContext);
+            if(mListener != null){
+                mListener.update(sScreen);
             }
         } else {
             CURRENT_STATE--;
@@ -101,10 +126,10 @@ public class Lesson {
     public void onBackButtonClicked(){
         CURRENT_STATE--;
         if(CURRENT_STATE >0){
-            Screen backScreen = map.get(CURRENT_STATE);
+            mScreen = map.get(CURRENT_STATE);
 
             if(mListener != null){
-                mListener.update(backScreen);
+                mListener.update(mScreen);
             }
         } else {
             //TODO
@@ -135,13 +160,37 @@ public class Lesson {
         Screen nextScreen = new Screen(currentstate);
         String textkey = "explain" + currentstate;
         String imagekey = "imageURI" + currentstate;
-        nextScreen.setExplain(soundBox.getString(textkey));
+        String explain = soundBox.getString(textkey);
+        String[] explains = explain.split(",");
+        nextScreen.setExplains(explains);
         nextScreen.setViewUri(soundBox.getString(imagekey));
         map.put(currentstate,nextScreen);
         return nextScreen;
     }
 
-    public interface LessonUpdater{
+    private CameraScreen getCameraScreen(int currentstate){ //camera用のscreenを返す
+        CameraScreen camScreen = new CameraScreen(currentstate);
+        String textkey = "camera";
+        String explain = soundBox.getString(textkey);
+        String[] explains = explain.split(",");
+        camScreen.setExplains(explains);
+        map.put(currentstate,camScreen);
+        return camScreen;
+    }
+
+        private SpeechScreen getSpeechScreen(int currentstate,Context context){
+            SpeechScreen spcScreen = new SpeechScreen(currentstate,context);
+            String textkey = "speech";
+            String explain = soundBox.getString(textkey);
+            String[] explains = explain.split(",");
+            spcScreen.setExplains(explains);
+            map.put(currentstate,spcScreen);
+            return spcScreen;
+        }
+
+
+
+    public interface LessonUpdater{ //LearningFragment にUIを描画してもらう。
         public void update(Screen screen);
     }
 }

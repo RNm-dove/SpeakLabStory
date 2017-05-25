@@ -10,6 +10,7 @@ import android.view.View;
 public class Screen  {
 
     String explain;
+    String[] explains;
     String uri;
     int CURRENT_STATE;
 
@@ -21,12 +22,14 @@ public class Screen  {
     public void setExplain(String s) {
         this.explain = s;
     }
+    public void setExplains(String[] strings ){this.explains = strings;}
 
 
     public void setViewUri(String s) {
         this.uri = s;
     }
 
+    public String[] getExplains(){return this.explains;}
     public String getExplain(){return this.explain;}
     public String getUri(){return this.uri;}
 

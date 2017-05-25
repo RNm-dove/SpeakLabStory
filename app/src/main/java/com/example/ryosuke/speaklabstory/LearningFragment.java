@@ -1,13 +1,19 @@
 package com.example.ryosuke.speaklabstory;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
+import android.hardware.Camera;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -24,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 /**
@@ -51,12 +58,15 @@ public class LearningFragment extends Fragment implements Lesson.LessonUpdater {
 
     AssetManager assets;
     private TextView tView;
-    private ImageView iView;
-    private String text;
+    private View mView;
+    private String[] text;
     private String uri;
     private ImageFactory iFactory;
     private RelativeLayout rLayout;
     private Lesson mLesson;
+
+    private final int CAMERA_ID = 1; //frontCamera
+
 
     /**
      * Use this factory method to create a new instance of
@@ -83,7 +93,7 @@ public class LearningFragment extends Fragment implements Lesson.LessonUpdater {
             targetKANA = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        mLesson = new Lesson(assets,this);
+        mLesson = new Lesson(assets,this,getContext());
     }
 
     @Override
@@ -169,16 +179,50 @@ public class LearningFragment extends Fragment implements Lesson.LessonUpdater {
 
     @Override
     public void update(Screen s) {
-       text = s.getExplain();
-        uri = s.getUri();
         View v = getView();
-        tView = (TextView)v.findViewById(R.id.contentText);
-        iView = iFactory.newImageView(uri);
-
+        int i;
         rLayout = (RelativeLayout)v.findViewById(R.id.learningFragmentView);
         rLayout.removeAllViews();
-        rLayout.addView(iView);
-        tView.setText(text);
+        tView = (TextView) v.findViewById(R.id.contentText);
+        if(s instanceof CameraScreen) {
+            text = s.getExplains();
+
+            SurfaceView sView = new SurfaceView(getContext());
+            SurfaceHolder mSurfaceHolder = sView.getHolder();
+            mSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+            mSurfaceHolder.addCallback(new CameraHolder(getActivity()));
+            rLayout.addView(sView);
+
+        } else if (s instanceof SpeechScreen) {
+            text = s.getExplains();
+            mLesson.onSpeechLesson((SpeechScreen)s);
+
+        } else {
+            text = s.getExplains();
+            uri = s.getUri();
+            if(uri != null){
+                mView = iFactory.newImageView(uri);
+            }
+            rLayout.addView(mView);
+
+        }
+        tView.setText(text[0]);
+
+        tView.setOnClickListener(new View.OnClickListener(){
+            int i=1;
+
+            @Override
+            public void onClick(View v){
+                if(i < text.length){
+                    tView.setText(text[i]);
+                    i++;
+                }
+            }
+        });
+
+
+
+
 
 
     }
