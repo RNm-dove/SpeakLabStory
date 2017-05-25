@@ -34,7 +34,7 @@
     
     <TextView
         android:id="@+id/contentText"
-        android:textSize="40px"
+        android:textSize="75px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/charaImage"/>

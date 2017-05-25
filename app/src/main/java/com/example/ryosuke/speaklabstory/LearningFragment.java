@@ -47,6 +47,8 @@ public class LearningFragment extends Fragment implements Lesson.LessonUpdater {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    public static boolean TEXT_LAST =false;
+
     private String targetKANA; //選択された仮名を引数にとる
     private String mParam2;
 
@@ -180,7 +182,7 @@ public class LearningFragment extends Fragment implements Lesson.LessonUpdater {
     @Override
     public void update(Screen s) {
         View v = getView();
-        int i;
+        TEXT_LAST = false;
         rLayout = (RelativeLayout)v.findViewById(R.id.learningFragmentView);
         rLayout.removeAllViews();
         tView = (TextView) v.findViewById(R.id.contentText);
@@ -195,7 +197,6 @@ public class LearningFragment extends Fragment implements Lesson.LessonUpdater {
 
         } else if (s instanceof SpeechScreen) {
             text = s.getExplains();
-            mLesson.onSpeechLesson((SpeechScreen)s);
 
         } else {
             text = s.getExplains();
@@ -208,6 +209,8 @@ public class LearningFragment extends Fragment implements Lesson.LessonUpdater {
         }
         tView.setText(text[0]);
 
+
+
         tView.setOnClickListener(new View.OnClickListener(){
             int i=1;
 
@@ -216,7 +219,10 @@ public class LearningFragment extends Fragment implements Lesson.LessonUpdater {
                 if(i < text.length){
                     tView.setText(text[i]);
                     i++;
+                } if(i==text.length){
+                    TEXT_LAST = true;
                 }
+
             }
         });
 

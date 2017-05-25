@@ -93,6 +93,8 @@ public class Lesson {
 
     public void onSpeechLesson(SpeechScreen s){
 
+
+
     }
 
     public void onForwardButtonCliked(){
@@ -116,6 +118,7 @@ public class Lesson {
             if(mListener != null){
                 mListener.update(sScreen);
             }
+            sScreen.doSpeech();
         } else {
             CURRENT_STATE--;
         }
