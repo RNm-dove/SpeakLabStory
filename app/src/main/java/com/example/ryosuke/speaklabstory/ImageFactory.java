@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.DrawableRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +27,12 @@ public class ImageFactory {
      */
 
 
-    public ImageFactory(Context context, AssetManager assets){
+    public ImageFactory(Context context){
         this.context = context;
-        this.assets = assets;
+        assets = context.getAssets();
     }
 
-    public ImageView newImageView(String filename){
+    public ImageView getImageView(String filename){
         InputStream in = null;
         Bitmap bitmap = null;
 
@@ -58,4 +59,38 @@ public class ImageFactory {
 
         return imageView;
     }
+
+    public Bitmap getBitmap(String filename){
+        InputStream in = null;
+        Bitmap bitmap = null;
+
+
+        try{
+            in = assets.open(filename);
+            bitmap = BitmapFactory.decodeStream(in);
+            if(bitmap ==null){
+                throw new RuntimeException("Couldn't load bitmap from asset' " + filename + "'");
+            }
+        } catch (IOException e){
+            throw new RuntimeException("Couldn't load bitmap from asset' " + filename + "'");
+        } finally {
+            if(in != null){
+                try {
+                    in.close();
+                }catch (IOException e){
+
+                }
+            }
+        }
+        return bitmap;
+    }
+
+    public ImageView getImageView(@DrawableRes int drawable){
+
+        ImageView imageView = new ImageView(context);
+        imageView.setImageResource(drawable);
+
+        return imageView;
+    }
+
 }

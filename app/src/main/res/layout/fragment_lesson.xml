@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.ryosuke.speaklabstory.LessonFragment">
+
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/main_image"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+
+    <TextView
+        android:background="@drawable/button_state"
+        android:text="テキスト"
+        android:id="@+id/main_text"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:textSize="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
+    <ImageView
+        android:src="@drawable/tori_default"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/main_text"
+        android:id="@+id/bird_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

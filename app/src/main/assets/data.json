@@ -1,257 +1,30 @@
 {
-  "line_a" : [
+  "あ":[
     {
-      "word":"あ",
-      "count":2,
-      "imageURI1":"line_a/0.jpg",
-      "imageURI2":"line_a/0_side.jpg",
-      "explain1":"ぼいんは　はつおんの　きほんだよ。まずは　ふうせんか　ふくらました　ふくろを　よういしてね。, できたかな？　じゃあ　ふうせんか　ふくろにむかって　「あ〜〜]って　いってみよう。ほら　おかあさんも　いっしょにね。,　できたかな？　よしっ　ならつぎの　がめんに　いこう　"  ,
-      "explain2":"また　あったね。よし　まずは　ちっちゃな　あめか　チョコを　よういしてね。,それを　したの　うえに　のせちゃおう。　あっ　まだ　たべないでね。,　がめんに　きみの　かおが　うつるよ。　じぶんの　かおを　みて「あ〜〜」って言ってみよう。",
-      "camera":"じぶんの　くちを　かくにんしよう。, はと　はの　あいだに　おやゆびは　はいるかな？　したは　たいらに　なっているかな？",
-      "speech":""
+      "texts":"qa,ws,de,rf,gt,hy,ju,ik,lop;",
+      "image":"line_a/0.jpg"
     },
     {
-      "word":"い",
-      "imageURI":"line_a/１.jpg",
-      "imageURI2":"line_a/１_side.jpg"
+      "texts":"azs,xd,cfvg,bhnjmk,l",
+      "image":"line_a/1.jpg"
     },
     {
-      "word":"う",
-      "imageURI":"line_a/２.jpg",
-      "imageURI2":"line_a/２_side.jpg"
+      "texts":"loki,juh,ygtf,rde,swaq",
+      "image":"line_a/a.jpg"
     },
     {
-      "word":"え",
-      "imageURI":"line_a/３.jpg",
-      "imageURI2":"line_a/３_side.jpg"
+      "texts":"l,kmj,nhb,gv,fcdx",
+      "image":"line_a/a_side.jpg"
     },
     {
-      "word":"お",
-      "imageURI":"line_a/４.jpg",
-      "imageURI2":"line_a/４_side.jpg"
-    }
-  ],
-  "line_ka" :[
-    {
-      "word":"か",
-      "imageURI":"line_ka/0.jpg",
-      "imageURI2":"line_ka/0_side.jpg"
+      "texts":""
     },
     {
-      "word":"き",
-      "imageURI":"line_ka/１.jpg",
-      "imageURI2":"line_ka/１_side.jpg"
+      "texts":""
     },
     {
-      "word":"く",
-      "imageURI":"line_ka/２.jpg",
-      "imageURI2":"line_ka/２_side.jpg"
-    },
-    {
-      "word":"け",
-      "imageURI":"line_ka/３.jpg",
-      "imageURI2":"line_ka/３_side.jpg"
-    },
-    {
-      "word":"こ",
-      "imageURI":"line_ka/４.jpg",
-      "imageURI2":"line_ka/４_side.jpg"
-    }
-  ],
-  "line_sa" :[
-    {
-      "word":"さ",
-      "imageURI":"line_sa/0.jpg",
-      "imageURI2":"line_sa/0_side.jpg"
-    },
-    {
-      "word":"し",
-      "imageURI":"line_sa/１.jpg",
-      "imageURI2":"line_sa/１_side.jpg"
-    },
-    {
-      "word":"す",
-      "imageURI":"line_sa/２.jpg",
-      "imageURI2":"line_sa/２_side.jpg"
-    },
-    {
-      "word":"せ",
-      "imageURI":"line_sa/３.jpg",
-      "imageURI2":"line_sa/３_side.jpg"
-    },
-    {
-      "word":"そ",
-      "imageURI":"line_sa/４.jpg",
-      "imageURI2":"line_sa/４_side.jpg"
-    }
-  ],
-  "line_ta" :[
-    {
-      "word":"た",
-      "imageURI":"line_ta/0.jpg",
-      "imageURI2":"line_ta/0_side.jpg"
-    },
-    {
-      "word":"ち",
-      "imageURI":"line_ta/１.jpg",
-      "imageURI2":"line_ta/１_side.jpg"
-    },
-    {
-      "word":"つ",
-      "imageURI":"line_ta/２.jpg",
-      "imageURI2":"line_ta/２_side.jpg"
-    },
-    {
-      "word":"て",
-      "imageURI":"line_ta/３.jpg",
-      "imageURI2":"line_ta/３_side.jpg"
-    },
-    {
-      "word":"と",
-      "imageURI":"line_ta/４.jpg",
-      "imageURI2":"line_ta/４_side.jpg"
-    }
-  ],
-  "line_na" :[
-    {
-      "word":"な",
-      "imageURI":"line_na/0.jpg",
-      "imageURI2":"line_na/0_side.jpg"
-    },
-    {
-      "word":"に",
-      "imageURI":"line_na/１.jpg",
-      "imageURI2":"line_na/１_side.jpg"
-    },
-    {
-      "word":"ぬ",
-      "imageURI":"line_na/２.jpg",
-      "imageURI2":"line_na/２_side.jpg"
-    },
-    {
-      "word":"ね",
-      "imageURI":"line_na/３.jpg",
-      "imageURI2":"line_na/３_side.jpg"
-    },
-    {
-      "word":"の",
-      "imageURI":"line_na/４.jpg",
-      "imageURI2":"line_na/４_side.jpg"
-    }
-  ],
-  "line_ha" :[
-    {
-      "word":"は",
-      "imageURI":"line_ha/0.jpg",
-      "imageURI2":"line_ha/0_side.jpg"
-    },
-    {
-      "word":"ひ",
-      "imageURI":"line_ha/１.jpg",
-      "imageURI2":"line_ha/１_side.jpg"
-    },
-    {
-      "word":"ふ",
-      "imageURI":"line_ha/２.jpg",
-      "imageURI2":"line_ha/２_side.jpg"
-    },
-    {
-      "word":"へ",
-      "imageURI":"line_ha/３.jpg",
-      "imageURI2":"line_ha/３_side.jpg"
-    },
-    {
-      "word":"ほ",
-      "imageURI":"line_ha/４.jpg",
-      "imageURI2":"line_ha/４_side.jpg"
-    }
-  ],
-  "line_ma" :[
-    {
-      "word":"ま",
-      "imageURI":"line_ma/0.jpg",
-      "imageURI2":"line_ma/0_side.jpg"
-    },
-    {
-      "word":"み",
-      "imageURI":"line_ma/１.jpg",
-      "imageURI2":"line_ma/１_side.jpg"
-    },
-    {
-      "word":"む",
-      "imageURI":"line_ma/２.jpg",
-      "imageURI2":"line_ma/２_side.jpg"
-    },
-    {
-      "word":"め",
-      "imageURI":"line_ma/３.jpg",
-      "imageURI2":"line_ma/３_side.jpg"
-    },
-    {
-      "word":"も",
-      "imageURI":"line_ma/４.jpg",
-      "imageURI2":"line_ma/４_side.jpg"
-    }
-  ],
-  "line_ya" :[
-    {
-      "word":"や",
-      "imageURI":"line_ya/0.jpg",
-      "imageURI2":"line_ya/0_side.jpg"
-    },
-    {
-      "word":"ゆ",
-      "imageURI":"line_ya/１.jpg",
-      "imageURI2":"line_ya/１_side.jpg"
-    },
-    {
-      "word":"よ",
-      "imageURI":"line_ya/２.jpg",
-      "imageURI2":"line_ya/２_side.jpg"
-    }
-  ],
-  "line_ra" :[
-    {
-      "word":"ら",
-      "imageURI":"line_ra/0.jpg",
-      "imageURI2":"line_ra/0_side.jpg"
-    },
-    {
-      "word":"り",
-      "imageURI":"line_ra/１.jpg",
-      "imageURI2":"line_ra/１_side.jpg"
-    },
-    {
-      "word":"る",
-      "imageURI":"line_ra/２.jpg",
-      "imageURI2":"line_ka/２_side.jpg"
-    },
-    {
-      "word":"れ",
-      "imageURI":"line_ra/３.jpg",
-      "imageURI2":"line_ka/３_side.jpg"
-    },
-    {
-      "word":"ろ",
-      "imageURI":"line_ra/４.jpg",
-      "imageURI2":"line_ka/４_side.jpg"
-    }
-  ],
-  "line_wa" :[
-    {
-      "word":"わ",
-      "imageURI":"line_wa/0.jpg",
-      "imageURI2":"line_wa/0_side.jpg"
-    },
-    {
-      "word":"を",
-      "imageURI":"line_wa/１.jpg",
-      "imageURI2":"line_wa/１_side.jpg"
-    },
-    {
-      "word":"ん",
-      "imageURI":"line_wa/２.jpg",
-      "imageURI2":"line_wa/２_side.jpg"
+      "texts":"esx,rdctf,vg,yuh,i,j"
     }
   ]
+
 }
