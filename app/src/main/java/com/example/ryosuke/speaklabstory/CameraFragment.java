@@ -17,6 +17,7 @@ import java.util.ArrayList;
  */
 
 public class CameraFragment extends LessonFragment {
+    private SurfaceHolder.Callback mCallback;
 
 
     @Override
@@ -29,7 +30,7 @@ public class CameraFragment extends LessonFragment {
         View layout = inflater.inflate(R.layout.fragment_camera, container, false);
         SurfaceView surfaceView = (SurfaceView)layout.findViewById(R.id.camera_view);
         SurfaceHolder holder = surfaceView.getHolder();
-        holder.addCallback(new CameraHolder(getActivity()));
+        holder.addCallback(mCallback);
 
         final LessonFragment fragment = this;
 
@@ -49,4 +50,10 @@ public class CameraFragment extends LessonFragment {
         return layout;
 
     }
+
+    public void setmCallback(SurfaceHolder.Callback callback){mCallback = callback;}
+
+
+
+
 }

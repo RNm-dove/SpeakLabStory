@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.SparseArrayCompat;
+import android.view.SurfaceHolder;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     private ArrayList<Bundle> mList;
     private String mText;
     private Fragment mFragment;
+    private SurfaceHolder.Callback mCallback;
 
     public FragmentAdapter(FragmentManager fm) {
         super(fm);
@@ -31,6 +33,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
              fragment = new LessonFragment();
         } else if (position < mList.size()-1){
              fragment = new CameraFragment();
+            ((CameraFragment)fragment).setmCallback(mCallback);
 
         } else{
              fragment = new LessonFragment();
@@ -58,6 +61,8 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     }
     public void addText(String text){mText = text;
     }
+
+    public void setCallback(SurfaceHolder.Callback callback){mCallback = callback;}
 
 
 }
