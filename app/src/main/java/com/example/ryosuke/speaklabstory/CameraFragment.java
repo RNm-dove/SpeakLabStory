@@ -32,6 +32,7 @@ public class CameraFragment extends LessonFragment {
         SurfaceHolder holder = surfaceView.getHolder();
         holder.addCallback(mCallback);
 
+
         final LessonFragment fragment = this;
 
         mTextView = (TextView)layout.findViewById(R.id.camera_text);
@@ -49,6 +50,11 @@ public class CameraFragment extends LessonFragment {
 
         return layout;
 
+    }
+
+    @Override
+    public void onButtonPressed(View view, LessonFragment fragment) {
+        super.onButtonPressed(view, fragment);
     }
 
     public void setmCallback(SurfaceHolder.Callback callback){mCallback = callback;}

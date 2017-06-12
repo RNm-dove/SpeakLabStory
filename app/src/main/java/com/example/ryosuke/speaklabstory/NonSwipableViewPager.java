@@ -10,7 +10,7 @@ import android.view.MotionEvent;
  */
 
 public class NonSwipableViewPager extends ViewPager {
-    public boolean SWIPE_LOCK = true;
+    private boolean SWIPE_LOCK = false;
 
 
     public NonSwipableViewPager(Context context) {

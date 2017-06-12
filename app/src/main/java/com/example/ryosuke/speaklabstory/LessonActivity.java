@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class LessonActivity extends AppCompatActivity implements RecognitionListener, LessonFragment.OnFragmentInteractionListener {
+public class LessonActivity extends AppCompatActivity implements RecognitionListener, LessonFragment.OnFragmentInteractionListener  {
 
     private FragmentAdapter mAdapter;
     private ViewPager mViewPager;
@@ -49,6 +49,8 @@ public class LessonActivity extends AppCompatActivity implements RecognitionList
 
     public static final String TARGET_KANA = "targetKANA";
     private final String JSON_FILE  = "data.json";
+
+    public boolean CAMERA_OK =false;
 
 
     /**
@@ -85,7 +87,10 @@ public class LessonActivity extends AppCompatActivity implements RecognitionList
                 if(list.get(position) != null){
                     mIterator = list.get(position).getStringArrayList("texts").iterator();
                     if(mIterator.hasNext())mIterator.next(); //すでにテキスト[0]は表示してあるのでイテレーターをテキスト[1]からにしておく
+
+
                 }
+
             }
 
             @Override
@@ -95,40 +100,47 @@ public class LessonActivity extends AppCompatActivity implements RecognitionList
 
             @Override
             public void onPageScrollStateChanged(int state) {
+                if(mAdapter.getCurrentFragment() instanceof CameraFragment){
+                    CAMERA_OK =true;
+                }
+
 
             }
         });
 
         mVibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
-        mViewPager.setOnTouchListener();
+        mViewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (CAMERA_OK == true){
+                    Camera.Parameters params = mCamera.getParameters();
+                    int action = event.getAction();
 
 
+                    if (event.getPointerCount() > 1) {
+                        // handle multi-touch events
+                        if (action == MotionEvent.ACTION_POINTER_DOWN) {
+                            mDist = getFingerSpacing(event);
+                        } else if (action == MotionEvent.ACTION_MOVE && params.isZoomSupported()) {
+                            mCamera.cancelAutoFocus();
+                            handleZoom(event, params);
+                        }
+                    } else {
+                        // handle single touch events
+                        if (action == MotionEvent.ACTION_UP) {
+                            handleFocus(event, params);
+                        }
+                    }
+                    return true;
+                }
 
-
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        // Get the pointer ID
-        Camera.Parameters params = mCamera.getParameters();
-        int action = event.getAction();
-
-
-        if (event.getPointerCount() > 1) {
-            // handle multi-touch events
-            if (action == MotionEvent.ACTION_POINTER_DOWN) {
-                mDist = getFingerSpacing(event);
-            } else if (action == MotionEvent.ACTION_MOVE && params.isZoomSupported()) {
-                mCamera.cancelAutoFocus();
-                handleZoom(event, params);
+                return false;
             }
-        } else {
-            // handle single touch events
-            if (action == MotionEvent.ACTION_UP) {
-                handleFocus(event, params);
-            }
-        }
-        return true;
+        });
+
+
+
+
     }
 
     private void handleZoom(MotionEvent event, Camera.Parameters params) {
@@ -200,6 +212,14 @@ public class LessonActivity extends AppCompatActivity implements RecognitionList
                     speechRecognizer.startListening(intent);
                     fragment.setEnableRecognize(false);
                 } else {
+                    mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1);
+                }
+                break;
+            case R.id.camera_text:
+                if(mIterator.hasNext()) {
+                    String s = mIterator.next();
+                    ((TextView) view).setText(s);
+                }else {
                     mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1);
                 }
         }
